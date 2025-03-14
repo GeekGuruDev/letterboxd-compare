@@ -27,7 +27,7 @@ function CommonMoviesCounter({
           <span>by both</span>
         </p>
       </div>
-      <div className="flex justify-center items-end">
+      <div className="flex justify-center md:items-end">
         <CommonMoviesCounterItem
           count={moviesStat1 - commonMovies.length}
           name={name1}

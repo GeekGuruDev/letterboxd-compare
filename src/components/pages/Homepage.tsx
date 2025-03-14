@@ -22,7 +22,7 @@ function Homepage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-center bg-cover bg-[url(./assets/bg-image.jpg)]">
+    <div className="min-h-dvh flex items-center justify-center bg-center bg-cover bg-[url(./assets/bg-image.jpg)]">
       <Card className={cardStyle}>
         <CardHeader>
           <CardTitle className="mb-4">
@@ -39,7 +39,7 @@ function Homepage() {
               User 1
             </UsernameInput>
             <UsernameInput
-              placeholder="e.g. desinerdguy"
+              placeholder="e.g. moviestalk"
               username={username2}
               setUsername={setUsername2}
             >

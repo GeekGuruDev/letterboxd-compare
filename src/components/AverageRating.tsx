@@ -1,13 +1,12 @@
 import { Star } from "lucide-react";
 import { Movie } from "./pages/ComparePage";
 
-function AverageRating({
-  moviesData,
-  name,
-}: {
+interface AverageRatingProps {
   moviesData: Movie[];
   name: string;
-}) {
+}
+
+function AverageRating({ moviesData, name }: AverageRatingProps) {
   const totalRating = moviesData.reduce(
     (acc, movie) => acc + (movie.rate || 0),
     0

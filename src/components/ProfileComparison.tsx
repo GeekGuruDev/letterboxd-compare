@@ -6,12 +6,12 @@ import AvgRatingLoader from "./AvgRatingLoader";
 import AverageRating from "./AverageRating";
 import { Movie, Profile } from "./pages/ComparePage";
 import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
 import { useSearchParams } from "react-router";
+import ProfileError from "./ProfileError";
 
 interface ProfileComparisonProps {
-  loadingProfile1: boolean;
-  loadingProfile2: boolean;
+  profileLoading1: boolean;
+  profileLoading2: boolean;
   profileData1?: Profile | null;
   profileData2?: Profile | null;
   loadingMovies1: boolean;
@@ -20,13 +20,15 @@ interface ProfileComparisonProps {
   moviesData2?: Movie[] | null;
   moviesStat1: number;
   moviesStat2: number;
-  err1: Error | null;
-  err2: Error | null;
+  profileErr1: Error | null;
+  profileErr2: Error | null;
+  moviesErr1: Error | null;
+  moviesErr2: Error | null;
 }
 
 function ProfileComparison({
-  loadingProfile1,
-  loadingProfile2,
+  profileLoading1,
+  profileLoading2,
   profileData1,
   profileData2,
   loadingMovies1,
@@ -35,8 +37,10 @@ function ProfileComparison({
   moviesData2,
   moviesStat1,
   moviesStat2,
-  err1,
-  err2,
+  profileErr1,
+  profileErr2,
+  moviesErr1,
+  moviesErr2,
 }: ProfileComparisonProps) {
   const [searchParams] = useSearchParams();
   const username1 = searchParams.get("user1") || "";
@@ -45,49 +49,15 @@ function ProfileComparison({
   return (
     <section>
       <div className="flex justify-center gap-2">
-        {loadingProfile1 && <ProfileLoader />}
-        {err1 && (
-          <div className="py-16 flex-1 flex flex-col justify-center gap-8 text-center text-muted-foreground">
-            <h1 className="text-lg md:text-2xl">
-              Username:{" "}
-              <span className="text-foreground font-semibold">{username1}</span>{" "}
-              not found.
-            </h1>
-            <p className="mx-8">Please enter correct username and try again.</p>
-            <div>
-              <Button
-                variant="outline"
-                onClick={() => window.location.reload()}
-              >
-                Try again
-              </Button>
-            </div>
-          </div>
-        )}
+        {profileLoading1 && <ProfileLoader />}
+        {profileErr1 && <ProfileError username={username1} id="user1" />}
         {profileData1 && <ProfileDetails data={profileData1} />}
         <Separator orientation="vertical" />
-        {loadingProfile2 && <ProfileLoader />}
-        {err2 && (
-          <div className="py-16 flex-1 flex flex-col justify-center gap-8 text-center text-muted-foreground">
-            <h1 className="text-lg md:text-2xl">
-              Username:{" "}
-              <span className="text-foreground font-semibold">{username2}</span>{" "}
-              not found.
-            </h1>
-            <p className="mx-8">Please enter correct username and try again.</p>
-            <div>
-              <Button
-                variant="outline"
-                onClick={() => window.location.reload()}
-              >
-                Try again
-              </Button>
-            </div>
-          </div>
-        )}
+        {profileLoading2 && <ProfileLoader />}
+        {profileErr2 && <ProfileError username={username2} id="user2" />}
         {profileData2 && <ProfileDetails data={profileData2} />}
       </div>
-      {(loadingProfile1 || loadingProfile2) && (
+      {(profileLoading1 || profileLoading2) && (
         <div className="my-16 flex flex-col items-center gap-1">
           <Skeleton className="w-[300px] h-[30px]" />
           <Skeleton className="sm:hidden w-[100px] h-[30px]" />
@@ -104,7 +74,14 @@ function ProfileComparison({
       )}
       <div className="text-center flex justify-evenly gap-4">
         {loadingMovies1 && <AvgRatingLoader />}
-        {!loadingMovies1 && profileData1 && moviesData1?.length && (
+        {moviesErr1 && (
+          <div className="flex-1">
+            <p className="text-destructive-foreground text-center">
+              Error fetching {profileData1?.displayName} movies details
+            </p>
+          </div>
+        )}
+        {profileData1 && !loadingMovies1 && moviesData1?.length && (
           <AverageRating
             name={profileData1.displayName}
             moviesData={moviesData1}
@@ -112,7 +89,15 @@ function ProfileComparison({
         )}
         <Separator orientation="vertical" />
         {loadingMovies2 && <AvgRatingLoader />}
-        {!loadingMovies2 && profileData2 && moviesData2?.length && (
+        {moviesErr2 && (
+          <div className="flex-1">
+            <p className="text-destructive-foreground text-center">
+              Error fetching {profileData2?.displayName} movies details. Try
+              again
+            </p>
+          </div>
+        )}
+        {profileData2 && !loadingMovies2 && moviesData2?.length && (
           <AverageRating
             name={profileData2.displayName}
             moviesData={moviesData2}

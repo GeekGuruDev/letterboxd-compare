@@ -8,6 +8,7 @@ import SpinningLoader from "../SpinningLoader";
 import BackHomeButton from "../BackHomeButton";
 import MoviesList from "../MoviesList";
 import RatedMoviesList from "../RatedMoviesList";
+import ShareLink from "../ShareLink ";
 
 export type Profile = {
   username: string;
@@ -46,14 +47,16 @@ function ComparePage() {
   const username1 = searchParams.get("user1") || "";
   const username2 = searchParams.get("user2") || "";
 
+  const link = `https://letterboxdcompare.netlify.app/compare?user1=${username1}&user2=${username2}/`;
+
   const {
     data: profileData1,
-    loading: loadingProfile1,
+    loading: profileLoading1,
     error: err1,
   } = useFetchUser<Profile>(username1, "profile");
   const {
     data: profileData2,
-    loading: loadingProfile2,
+    loading: profileLoading2,
     error: err2,
   } = useFetchUser<Profile>(username2, "profile");
   const { displayName: name1, moviesStat: moviesStat1 } = profileData1 ?? {
@@ -67,28 +70,26 @@ function ComparePage() {
 
   const isProfilesLoaded = profileData1 !== null && profileData2 !== null;
 
-  const { data: moviesData1, loading: loadingMovies1 } = useFetchUser<Movie[]>(
-    username1,
-    "movies",
-    isProfilesLoaded
-  );
-  const { data: moviesData2, loading: loadingMovies2 } = useFetchUser<Movie[]>(
-    username2,
-    "movies",
-    isProfilesLoaded
-  );
+  const {
+    data: moviesData1,
+    loading: loadingMovies1,
+    error: moviesErr1,
+  } = useFetchUser<Movie[]>(username1, "movies", isProfilesLoaded);
+  const {
+    data: moviesData2,
+    loading: loadingMovies2,
+    error: moviesErr2,
+  } = useFetchUser<Movie[]>(username2, "movies", isProfilesLoaded);
   const isMoviesLoaded = moviesData1 !== null && moviesData2 !== null;
 
-  const { data: watchlistData1 } = useFetchUser<Movie[]>(
-    username1,
-    "watchlist",
-    isMoviesLoaded
-  );
-  const { data: watchlistData2 } = useFetchUser<Movie[]>(
-    username2,
-    "watchlist",
-    isMoviesLoaded
-  );
+  const { data: watchlistData1, loading: watchlistLoading1 } = useFetchUser<
+    Movie[]
+  >(username1, "watchlist", isMoviesLoaded);
+  const { data: watchlistData2, loading: watchlistLoading2 } = useFetchUser<
+    Movie[]
+  >(username2, "watchlist", isMoviesLoaded);
+
+  const isWatchlistLoading = watchlistLoading1 || watchlistLoading2;
 
   const commonMovies: CommonMovie[] = [];
   const moviesData2Map = new Map(moviesData2?.map((item) => [item.slug, item]));
@@ -141,10 +142,10 @@ function ComparePage() {
       </header>
       <main className="max-w-4xl p-4 mb-16 mx-auto">
         <ProfileComparison
-          loadingProfile1={loadingProfile1}
-          loadingProfile2={loadingProfile2}
-          err1={err1}
-          err2={err2}
+          profileLoading1={profileLoading1}
+          profileLoading2={profileLoading2}
+          profileErr1={err1}
+          profileErr2={err2}
           profileData1={profileData1}
           profileData2={profileData2}
           loadingMovies1={loadingMovies1}
@@ -153,8 +154,10 @@ function ComparePage() {
           moviesData2={moviesData2}
           moviesStat1={moviesStat1}
           moviesStat2={moviesStat2}
+          moviesErr1={moviesErr1}
+          moviesErr2={moviesErr2}
         />
-        {!isMoviesLoaded && (
+        {isProfilesLoaded && !isMoviesLoaded && (
           <section className="mt-16">
             <div className="text-center">
               <h1 className="text-4xl text-center leading-relaxed text-muted-foreground">
@@ -162,10 +165,13 @@ function ComparePage() {
               </h1>
               <Skeleton className="w-[200px] h-[60px] mx-auto" />
             </div>
+            <p className="mt-16 text-lg tracking-wide text-muted-foreground text-center">
+              Collection movies data...
+            </p>
             <SpinningLoader size={48} className="mx-auto" />
           </section>
         )}
-        {isMoviesLoaded && (
+        {isProfilesLoaded && isMoviesLoaded && (
           <>
             <MatchingScoreSection
               moviesStat1={moviesStat1}
@@ -183,19 +189,25 @@ function ComparePage() {
               Common Liked Movies
             </MoviesList>
 
-            {commonWatchlistMovies && (
-              <MoviesList moviesList={commonWatchlistMovies}>
-                Common Watchlist
-              </MoviesList>
+            {isWatchlistLoading && (
+              <SpinningLoader size={48} className="mx-auto" />
             )}
+            {commonWatchlistMovies && (
+              <>
+                <MoviesList moviesList={commonWatchlistMovies}>
+                  Common Watchlist
+                </MoviesList>
 
-            <RatedMoviesList moviesList={similarRatedMovies}>
-              Similar Rated Movies
-            </RatedMoviesList>
+                <RatedMoviesList moviesList={similarRatedMovies}>
+                  Similar Rated Movies
+                </RatedMoviesList>
 
-            <RatedMoviesList moviesList={dissimilarRatedMovies}>
-              Dissimilar Rated Movies
-            </RatedMoviesList>
+                <RatedMoviesList moviesList={dissimilarRatedMovies}>
+                  Dissimilar Rated Movies
+                </RatedMoviesList>
+                <ShareLink link={link} />
+              </>
+            )}
           </>
         )}
       </main>

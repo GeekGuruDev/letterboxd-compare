@@ -9,8 +9,6 @@ function CommonMoviesCounterItem({
   name,
   color,
 }: CommonMoviesCounterItemProps) {
-  const truncatedName = name.length > 16 ? name.slice(0, 16) + "..." : name;
-
   const colorClass = color === "blue" ? "text-blue-600" : "text-emerald-600";
   return (
     <div className="flex-[1_1_0px]">
@@ -19,7 +17,9 @@ function CommonMoviesCounterItem({
       </h1>
       <p className="text-muted-foreground flex flex-col items-center">
         <span>movies watched by</span>
-        <span>{truncatedName} only</span>
+        <span>
+          <span className="font-semibold">{name}</span> only
+        </span>
       </p>
     </div>
   );

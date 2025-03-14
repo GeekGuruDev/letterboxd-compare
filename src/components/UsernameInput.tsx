@@ -1,11 +1,14 @@
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
+import { cn } from "@/lib/utils";
+
 interface UsernameInputProps {
   username: string;
   setUsername: (username: string) => void;
   children: string;
   placeholder: string;
+  className?: string;
 }
 
 function UsernameInput({
@@ -13,10 +16,11 @@ function UsernameInput({
   setUsername,
   children,
   placeholder,
+  className = "",
 }: UsernameInputProps) {
   const id = children.replace(" ", "").toLowerCase();
   return (
-    <div className="grid gap-2">
+    <div className={cn("grid gap-2", className)}>
       <Label htmlFor={id} className="font-bold tracking-wider">
         {children}
       </Label>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const API_URL = "https://letterboxd-compare-api.onrender.com";
+// const API_URL = "http://localhost:3000";
 
 interface Movie {
   title: string;

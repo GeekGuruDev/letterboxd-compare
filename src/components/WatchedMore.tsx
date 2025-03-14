@@ -12,11 +12,16 @@ function WatchedMore({
   moviesStat2,
 }: WatchedMoreProps) {
   return (
-    <h3 className="text-center text-2xl my-16">
-      {moviesStat1 >= moviesStat2 ? name1 : name2} has watched{" "}
-      <span className="font-bold">{Math.abs(moviesStat1 - moviesStat2)}</span>{" "}
+    <h4 className="text-center text-2xl my-16">
+      <span className="font-bold">
+        {moviesStat1 >= moviesStat2 ? name1 : name2}
+      </span>{" "}
+      watched{" "}
+      <span className="font-bold text-blue-500">
+        {Math.abs(moviesStat1 - moviesStat2)}
+      </span>{" "}
       more movies
-    </h3>
+    </h4>
   );
 }
 export default WatchedMore;

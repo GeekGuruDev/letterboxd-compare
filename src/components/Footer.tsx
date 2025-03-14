@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="-mt-10 py-2 w-full text-center ">
+    <footer className="-mt-14 py-4 w-full text-center ">
       <p className="font-mono text-gray-500">
         MADE BY RIDDLER{" "}
         <a
