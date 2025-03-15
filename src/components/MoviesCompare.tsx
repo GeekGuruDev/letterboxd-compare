@@ -1,4 +1,3 @@
-import { Separator } from "@radix-ui/react-separator";
 import AverageRating from "./AverageRating";
 import SpinningLoader from "./SpinningLoader";
 import MoviesList from "./MoviesList";
@@ -11,6 +10,7 @@ import CommonMoviesCounter from "./CommonMoviesCounter";
 import { Profile, Movie, CommonMovie } from "./pages/ComparePage";
 import ShareLink from "./ShareLink ";
 import { useSearchParams } from "react-router";
+import { Separator } from "./ui/separator";
 
 interface MoviesCompareProps {
   profile1: Profile;
