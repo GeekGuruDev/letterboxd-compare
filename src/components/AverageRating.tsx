@@ -45,8 +45,7 @@ function AverageRating({
       </div>
       {isLoading && (
         <div className="font-medium text-4xl tracking-wider gap-4 flex items-center">
-          <Skeleton className="w-[70px] h-[40px]" />
-          <Skeleton className="w-[40px] h-[40px] rounded-full" />
+          <Skeleton className="w-[120px] h-[40px]" />
         </div>
       )}
       {!isError && !isLoading && (
