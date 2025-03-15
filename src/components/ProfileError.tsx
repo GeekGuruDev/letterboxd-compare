@@ -11,10 +11,11 @@ interface ProfileErrorProps {
 function ProfileError({ userKey }: ProfileErrorProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const username: string = searchParams.get(userKey) || "";
-  const [correctUsername, setCorrectUsername] = useState(username);
+  const [correctInputText, setCorrectInputText] = useState(username);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const correctUsername = correctInputText.toLowerCase().trim();
     searchParams.set(userKey, correctUsername);
     setSearchParams(searchParams);
   }
@@ -30,12 +31,10 @@ function ProfileError({ userKey }: ProfileErrorProps) {
       <form onSubmit={handleSubmit}>
         <UsernameInput
           placeholder="e.g. pjexplained"
-          username={correctUsername}
-          setUsername={setCorrectUsername}
+          inputText={correctInputText}
+          setInputText={setCorrectInputText}
           className="my-4 sm:max-w-64 mx-auto"
-        >
-          {""}
-        </UsernameInput>
+        />
         <Button>Try again</Button>
       </form>
     </div>
