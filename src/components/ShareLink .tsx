@@ -14,7 +14,7 @@ const ShareLink = ({ link }: { link: string }) => {
   const [copied, setCopied] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleCopyClick = async () => {
+  async function handleCopyClick() {
     if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(link);
@@ -37,7 +37,7 @@ const ShareLink = ({ link }: { link: string }) => {
         toast.error("Error copying link");
       }
     }
-  };
+  }
 
   return (
     <section className="mt-16 sm:w-max mx-auto">

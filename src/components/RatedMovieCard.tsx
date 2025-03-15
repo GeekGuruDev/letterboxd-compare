@@ -1,15 +1,15 @@
-import useFetchMovie from "@/hooks/useFetchMovie";
 import { CommonMovie } from "./pages/ComparePage";
 import { Card, CardContent } from "./ui/card";
 import UserRating from "./UserRating";
 import { Skeleton } from "./ui/skeleton";
+import useMovie from "@/hooks/useMovie";
 
 function RatedMovieCard({ ratedMovie }: { ratedMovie: CommonMovie }) {
-  const { movie, loading } = useFetchMovie(ratedMovie.slug);
+  const { movie, isPending } = useMovie(ratedMovie.slug);
   return (
     <Card className="p-0 rounded-md bg-muted">
       <CardContent className="p-0 flex">
-        {loading && (
+        {isPending && (
           <>
             <Skeleton className="w-[70px] h-[105px] rounded-r-none" />
             <div className="flex-1 flex flex-col">

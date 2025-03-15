@@ -1,11 +1,31 @@
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import ProfileError from "./ProfileError";
+import ProfileLoader from "./ProfileLoader";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
-import { Profile } from "./pages/ComparePage";
+import { Profile, UserKey } from "./pages/ComparePage";
 
-function ProfileDetails({ data }: { data: Profile }) {
-  const { avatar, displayName, username, moviesStat } = data;
+interface ProfileDetailsProps {
+  isLoading: boolean;
+  isError: boolean;
+  profile: Profile | undefined;
+  userKey: UserKey;
+}
 
+function ProfileDetails({
+  isLoading,
+  isError,
+  profile,
+  userKey,
+}: ProfileDetailsProps) {
+  if (isLoading) {
+    return <ProfileLoader />;
+  }
+
+  if (isError) {
+    return <ProfileError userKey={userKey} />;
+  }
+
+  const { avatar, displayName, username, moviesCount } = profile as Profile;
   return (
     <div className="flex flex-col flex-1 justify-between items-center gap-8">
       <a href={`https://letterboxd.com/${username}`} target="_blank">
@@ -31,7 +51,7 @@ function ProfileDetails({ data }: { data: Profile }) {
 
       <div>
         <p className=" text-blue-500 text-4xl font-bold tracking-wider">
-          {moviesStat}
+          {moviesCount}
         </p>
         <p className="text-sm text-muted-foreground leading-8 text-center">
           movies
@@ -40,4 +60,5 @@ function ProfileDetails({ data }: { data: Profile }) {
     </div>
   );
 }
+
 export default ProfileDetails;

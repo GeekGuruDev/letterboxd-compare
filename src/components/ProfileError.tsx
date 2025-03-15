@@ -2,19 +2,20 @@ import { useSearchParams } from "react-router";
 import { Button } from "./ui/button";
 import UsernameInput from "./UsernameInput";
 import { useState } from "react";
+import { UserKey } from "./pages/ComparePage";
 
 interface ProfileErrorProps {
-  username: string;
-  id: string;
+  userKey: UserKey;
 }
 
-function ProfileError({ username, id }: ProfileErrorProps) {
-  const [correctUsername, setCorrectUsername] = useState(username);
+function ProfileError({ userKey }: ProfileErrorProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const username: string = searchParams.get(userKey) || "";
+  const [correctUsername, setCorrectUsername] = useState(username);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    searchParams.set(id, correctUsername);
+    searchParams.set(userKey, correctUsername);
     setSearchParams(searchParams);
   }
 

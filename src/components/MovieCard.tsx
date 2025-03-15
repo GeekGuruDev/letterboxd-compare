@@ -1,12 +1,12 @@
-import useFetchMovie from "@/hooks/useFetchMovie";
+import useMovie from "@/hooks/useMovie";
 import { Skeleton } from "./ui/skeleton";
 
 function MovieCard({ slug }: { slug: string }) {
-  const { movie, loading } = useFetchMovie(slug);
+  const { movie, isPending } = useMovie(slug);
 
   return (
     <div className="flex flex-col items-center">
-      {loading && (
+      {isPending && (
         <>
           <Skeleton className="w-[70px] h-[105px] rounded-sm" />
           <Skeleton className="w-[80px] h-[14px] mt-1" />

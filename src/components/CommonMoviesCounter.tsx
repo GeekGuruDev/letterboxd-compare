@@ -1,26 +1,24 @@
 import CommonMoviesCounterItem from "./CommonMoviesCounterItem";
-import { CommonMovie } from "./pages/ComparePage";
+import { Profile } from "./pages/ComparePage";
 
 interface CommonMoviesCounterProps {
-  commonMovies: CommonMovie[];
-  moviesStat1: number;
-  moviesStat2: number;
-  name1: string;
-  name2: string;
+  commonMoviesCount: number;
+  user1: Profile;
+  user2: Profile;
 }
 
 function CommonMoviesCounter({
-  commonMovies,
-  moviesStat1,
-  moviesStat2,
-  name1,
-  name2,
+  commonMoviesCount,
+  user1,
+  user2,
 }: CommonMoviesCounterProps) {
+  const { displayName: name1, moviesCount: moviesCount1 } = user1;
+  const { displayName: name2, moviesCount: moviesCount2 } = user2;
   return (
     <div className="text-center mt-8">
       <div className="md:hidden">
         <h1 className="text-4xl tracking-wider bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent font-extrabold w-max mx-auto">
-          {commonMovies.length}
+          {commonMoviesCount}
         </h1>
         <p className="text-lg text-muted-foreground flex flex-col items-center">
           <span>movies watched</span>
@@ -29,13 +27,13 @@ function CommonMoviesCounter({
       </div>
       <div className="flex justify-center md:items-end">
         <CommonMoviesCounterItem
-          count={moviesStat1 - commonMovies.length}
+          count={moviesCount1 - commonMoviesCount}
           name={name1}
           color="blue"
         />
         <div className="hidden md:block">
           <h1 className="text-4xl tracking-wider bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent font-extrabold w-max mx-auto">
-            {commonMovies.length}
+            {commonMoviesCount}
           </h1>
           <p className="text-muted-foreground flex flex-col items-center">
             <span>movies watched</span>
@@ -43,7 +41,7 @@ function CommonMoviesCounter({
           </p>
         </div>
         <CommonMoviesCounterItem
-          count={moviesStat2 - commonMovies.length}
+          count={moviesCount2 - commonMoviesCount}
           name={name2}
           color="emerald"
         />

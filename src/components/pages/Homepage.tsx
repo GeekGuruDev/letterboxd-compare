@@ -4,21 +4,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Logo from "../Logo";
 import UsernameInput from "../UsernameInput";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 const cardStyle =
   "bg-white/75 backdrop-blur-xs shadow-[0px_0px_24px_2px_#000000] dark:bg-black/75";
 
 function Homepage() {
-  const [username1, setUsername1] = useState("");
-  const [username2, setUsername2] = useState("");
+  const [inputText1, setInputText1] = useState("");
+  const [inputText2, setInputText2] = useState("");
   const navigate = useNavigate();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!username1 || !username2) return;
+    const username1 = inputText1.toLowerCase().trim();
+    const username2 = inputText2.toLowerCase().trim();
+    if (!username1 || !username2) {
+      toast.error("Please enter both usernames.");
+      return;
+    }
     navigate(`/compare?user1=${username1}&user2=${username2}`);
-    setUsername1("");
-    setUsername2("");
+    setInputText1("");
+    setInputText2("");
   }
 
   return (
@@ -33,15 +39,15 @@ function Homepage() {
           <form onSubmit={handleSubmit} className="space-y-8">
             <UsernameInput
               placeholder="e.g. pjexplained"
-              username={username1}
-              setUsername={setUsername1}
+              inputText={inputText1}
+              setInputText={setInputText1}
             >
               User 1
             </UsernameInput>
             <UsernameInput
               placeholder="e.g. moviestalk"
-              username={username2}
-              setUsername={setUsername2}
+              inputText={inputText2}
+              setInputText={setInputText2}
             >
               User 2
             </UsernameInput>
