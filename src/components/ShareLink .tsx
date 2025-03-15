@@ -40,7 +40,7 @@ const ShareLink = ({ link }: { link: string }) => {
   }
 
   return (
-    <section className="mt-16 sm:w-max mx-auto">
+    <section className="mt-24 sm:w-max mx-auto">
       <h3 className="text-xl my-2">
         Share this comparison link with your friends.
       </h3>
