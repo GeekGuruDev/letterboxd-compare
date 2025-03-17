@@ -7,9 +7,6 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 import Footer from "../Footer";
 
-const cardStyle =
-  "my-4 bg-white/75 backdrop-blur-xs shadow-[0px_0px_24px_2px_#000000] dark:bg-black/75";
-
 function Homepage() {
   const [inputText1, setInputText1] = useState("");
   const [inputText2, setInputText2] = useState("");
@@ -31,7 +28,7 @@ function Homepage() {
   return (
     <div className="min-h-dvh flex flex-col items-center bg-center bg-cover bg-[url(./assets/bg-image.jpg)]">
       <div className="flex-1 flex items-center">
-        <Card className={cardStyle}>
+        <Card className="mt-4 bg-white/75 backdrop-blur-xs shadow-[0px_0px_24px_2px_#000000] dark:bg-black/75">
           <CardHeader>
             <CardTitle className="mb-4">
               <Logo />
