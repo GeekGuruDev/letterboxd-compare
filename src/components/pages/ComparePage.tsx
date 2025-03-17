@@ -1,8 +1,9 @@
 import Logo from "../Logo";
-import BackHomeButton from "../BackHomeButton";
+import HomeButton from "../HomeButton";
 import ProfileCompare from "../ProfileCompare";
 import MoviesCompare from "../MoviesCompare";
 import useProfile from "@/hooks/useProfile";
+import Footer from "../Footer";
 
 export const API_URL = "https://letterboxd-compare-api.onrender.com";
 // export const API_URL = "http://localhost:3000";
@@ -50,12 +51,12 @@ function ComparePage() {
   const isProfileSuccess = !!(profile1 && profile2);
 
   return (
-    <div className="py-8 min-h-screen">
-      <BackHomeButton />
-      <header className="my-8">
+    <div className="min-h-dvh">
+      <HomeButton />
+      <header className="pt-16 pb-8">
         <Logo />
       </header>
-      <main className="max-w-4xl p-4 mb-16 mx-auto">
+      <main className="max-w-4xl p-4 mx-auto">
         <ProfileCompare
           profileState1={profileState1}
           profileState2={profileState2}
@@ -64,6 +65,7 @@ function ComparePage() {
           <MoviesCompare profile1={profile1} profile2={profile2} />
         )}
       </main>
+      <Footer />
     </div>
   );
 }

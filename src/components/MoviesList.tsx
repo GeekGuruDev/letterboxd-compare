@@ -45,7 +45,9 @@ function MoviesList<T extends { slug: string }>({
       <h1 className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
         {children}
       </h1>
-      <p className="text-muted-foreground mb-2">{moviesList.length} movies</p>
+      <p className="ml-0.5 text-muted-foreground mb-2">
+        {moviesList.length} movies
+      </p>
       <div className="bg-muted rounded-sm py-4 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-y-8">
         {moviesList.length === 0 && (
           <p className="col-span-4 sm:col-span-6 md:col-span-8 p-4 text-center text-muted-foreground">
@@ -70,7 +72,7 @@ function MoviesList<T extends { slug: string }>({
               <DialogTitle className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
                 {children}
               </DialogTitle>
-              <DialogDescription className="text-muted-foreground mb-2">
+              <DialogDescription className="text-muted-foreground mb-2 ml-0.5">
                 {moviesList.length} movies
               </DialogDescription>
             </DialogHeader>

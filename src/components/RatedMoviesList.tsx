@@ -25,7 +25,9 @@ function RatedMoviesList({ children, moviesList }: MoviesListProps) {
       <h1 className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
         {children}
       </h1>
-      <p className="text-muted-foreground mb-2">{moviesList.length} movies</p>
+      <p className="text-muted-foreground mb-2 ml-0.5">
+        {moviesList.length} movies
+      </p>
       <div
         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-4 sm:gap-y-8 ${
           moviesList.length === 0 ? "bg-muted rounded-sm py-4" : ""
@@ -54,7 +56,7 @@ function RatedMoviesList({ children, moviesList }: MoviesListProps) {
               <DialogTitle className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
                 {children}
               </DialogTitle>
-              <DialogDescription className="text-muted-foreground mb-2">
+              <DialogDescription className="text-muted-foreground mb-2 ml-0.5">
                 {moviesList.length} movies
               </DialogDescription>
             </DialogHeader>

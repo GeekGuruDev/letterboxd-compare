@@ -5,9 +5,10 @@ import Logo from "../Logo";
 import UsernameInput from "../UsernameInput";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import Footer from "../Footer";
 
 const cardStyle =
-  "bg-white/75 backdrop-blur-xs shadow-[0px_0px_24px_2px_#000000] dark:bg-black/75";
+  "my-4 bg-white/75 backdrop-blur-xs shadow-[0px_0px_24px_2px_#000000] dark:bg-black/75";
 
 function Homepage() {
   const [inputText1, setInputText1] = useState("");
@@ -28,38 +29,42 @@ function Homepage() {
   }
 
   return (
-    <div className="min-h-dvh flex items-center justify-center bg-center bg-cover bg-[url(./assets/bg-image.jpg)]">
-      <Card className={cardStyle}>
-        <CardHeader>
-          <CardTitle className="mb-4">
-            <Logo />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <UsernameInput
-              placeholder="e.g. pjexplained"
-              inputText={inputText1}
-              setInputText={setInputText1}
-            >
-              User 1
-            </UsernameInput>
-            <UsernameInput
-              placeholder="e.g. moviestalk"
-              inputText={inputText2}
-              setInputText={setInputText2}
-            >
-              User 2
-            </UsernameInput>
-            <Button
-              type="submit"
-              className="tracking-wider cursor-pointer w-full rounded-md bg-gradient-to-r from-blue-600 to-teal-700 text-white  py-2 px-4 hover:from-blue-500 hover:to-teal-600"
-            >
-              Submit
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+    <div className="min-h-dvh flex flex-col items-center bg-center bg-cover bg-[url(./assets/bg-image.jpg)]">
+      <div className="flex-1 flex items-center">
+        <Card className={cardStyle}>
+          <CardHeader>
+            <CardTitle className="mb-4">
+              <Logo />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <UsernameInput
+                placeholder="e.g. pjexplained"
+                inputText={inputText1}
+                setInputText={setInputText1}
+              >
+                User 1
+              </UsernameInput>
+              <UsernameInput
+                placeholder="e.g. moviestalk"
+                inputText={inputText2}
+                setInputText={setInputText2}
+              >
+                User 2
+              </UsernameInput>
+              <Button
+                type="submit"
+                className="tracking-wider cursor-pointer w-full rounded-md bg-gradient-to-r from-blue-600 to-teal-700 text-white  py-2 px-4 hover:from-blue-500 hover:to-teal-600"
+              >
+                Submit
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Footer />
     </div>
   );
 }

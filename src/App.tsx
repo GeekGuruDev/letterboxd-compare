@@ -19,17 +19,22 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-      <ThemeProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Homepage />} />
-              <Route path="/compare" element={<ComparePage />} />
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ThemeProvider>
+                <AppLayout />
+              </ThemeProvider>
+            }
+          >
+            <Route index element={<Homepage />} />
+            <Route path="/compare" element={<ComparePage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }
