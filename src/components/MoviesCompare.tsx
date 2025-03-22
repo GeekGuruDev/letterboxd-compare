@@ -101,6 +101,17 @@ function MoviesCompare({ profile1, profile2 }: MoviesCompareProps) {
     return Math.abs(movie.user1.rate - movie.user2.rate) > 1;
   });
 
+  const liked1 = movies1?.filter((movie) => movie.liked);
+  const liked2 = movies2?.filter((movie) => movie.liked);
+
+  const likedByUser1NotWatchedByUser2 = liked1?.filter((movie) => {
+    return !movies2?.some((item) => item.slug === movie.slug);
+  });
+
+  const likedByUser2NotWatchedByUser1 = liked2?.filter((movie) => {
+    return !movies1?.some((item) => item.slug === movie.slug);
+  });
+
   return (
     <>
       <section className="text-center flex justify-evenly gap-4">
@@ -161,7 +172,12 @@ function MoviesCompare({ profile1, profile2 }: MoviesCompareProps) {
           <MoviesList moviesList={commonLikedMovies}>
             Common Liked Movies
           </MoviesList>
-
+          <MoviesList moviesList={likedByUser1NotWatchedByUser2 as Movie[]}>
+            {`Liked by ${profile1.username} but not watched by ${profile2.username}`}
+          </MoviesList>
+          <MoviesList moviesList={likedByUser2NotWatchedByUser1 as Movie[]}>
+            {`Liked by ${profile2.username} but not watched by ${profile1.username}`}
+          </MoviesList>
           <MoviesList
             moviesList={commonWatchlistMovies}
             isLoading={isWatchlistLoading}

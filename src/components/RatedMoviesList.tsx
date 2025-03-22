@@ -22,10 +22,10 @@ function RatedMoviesList({ children, moviesList }: MoviesListProps) {
     moviesList.length > 6 ? moviesList.slice(0, 6) : moviesList;
   return (
     <section className="mt-16">
-      <h1 className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
+      <h1 className="font-semibold text-xl md:text-2xl text-muted-foreground">
         {children}
       </h1>
-      <p className="text-muted-foreground mb-2 ml-0.5">
+      <p className="text-muted-foreground my-2 ml-0.5">
         {moviesList.length} movies
       </p>
       <div
@@ -53,10 +53,10 @@ function RatedMoviesList({ children, moviesList }: MoviesListProps) {
           </div>
           <DialogContent className="block sm:max-w-[calc(100%-2rem)] lg:max-w-4xl px-0 pb-0">
             <DialogHeader className="px-4 block text-left">
-              <DialogTitle className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
+              <DialogTitle className="mr-4 text-xl md:text-2xl text-muted-foreground">
                 {children}
               </DialogTitle>
-              <DialogDescription className="text-muted-foreground mb-2 ml-0.5">
+              <DialogDescription className="text-muted-foreground my-2 ml-0.5">
                 {moviesList.length} movies
               </DialogDescription>
             </DialogHeader>

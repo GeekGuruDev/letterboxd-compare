@@ -54,7 +54,7 @@ function Homepage() {
                 type="submit"
                 className="tracking-wider cursor-pointer w-full rounded-md bg-gradient-to-r from-blue-600 to-teal-700 text-white  py-2 px-4 hover:from-blue-500 hover:to-teal-600"
               >
-                Submit
+                Compare
               </Button>
             </form>
           </CardContent>

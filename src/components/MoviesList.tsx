@@ -29,10 +29,10 @@ function MoviesList<T extends { slug: string }>({
   if (isLoading) {
     return (
       <section className="mt-16">
-        <h1 className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
+        <h1 className="font-semibold text-xl md:text-xl text-muted-foreground">
           {children}
         </h1>
-        <Skeleton className="w-[64px] h-[24px] mb-2" />
+        <Skeleton className="w-[64px] h-[24px] my-2" />
         <div className="bg-muted rounded-sm py-4">
           <SpinningLoader size={48} className="mx-auto" />
         </div>
@@ -42,10 +42,10 @@ function MoviesList<T extends { slug: string }>({
 
   return (
     <section className="mt-16">
-      <h1 className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
+      <h1 className="font-semibold text-xl md:text-2xl text-muted-foreground">
         {children}
       </h1>
-      <p className="ml-0.5 text-muted-foreground mb-2">
+      <p className="ml-0.5 text-muted-foreground my-2">
         {moviesList.length} movies
       </p>
       <div className="bg-muted rounded-sm py-4 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-y-8">
@@ -69,10 +69,10 @@ function MoviesList<T extends { slug: string }>({
           </div>
           <DialogContent className="block sm:max-w-[calc(100%-2rem)] lg:max-w-4xl px-0 pb-0">
             <DialogHeader className="px-4 block text-left">
-              <DialogTitle className="text-2xl md:text-3xl leading-relaxed text-muted-foreground">
+              <DialogTitle className="mr-4 text-xl md:text-2xl text-muted-foreground">
                 {children}
               </DialogTitle>
-              <DialogDescription className="text-muted-foreground mb-2 ml-0.5">
+              <DialogDescription className="text-muted-foreground my-2 ml-0.5">
                 {moviesList.length} movies
               </DialogDescription>
             </DialogHeader>
