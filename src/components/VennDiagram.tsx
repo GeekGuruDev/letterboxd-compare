@@ -19,7 +19,7 @@ function VennDiagram({ user1, user2, commonMoviesCount }: VennDiagramProps) {
       box: { fill: "rgba(0,0,0,0)" },
       defaultPoint: {
         focusGlow: false,
-        label: { autoHide: true, autoWrap: true },
+        label: { autoWrap: true },
         tooltip: "%name watched %yValue movies",
       },
       series: [

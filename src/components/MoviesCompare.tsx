@@ -7,10 +7,46 @@ import useWatchlist from "@/hooks/useWatchlist";
 import MatchingScore from "./MatchingScore";
 import VennDiagram from "./VennDiagram";
 import CommonMoviesCounter from "./CommonMoviesCounter";
-import { Profile, Movie, CommonMovie } from "./pages/ComparePage";
+import { Profile, Movie } from "./pages/ComparePage";
 import ShareLink from "./ShareLink ";
 import { useSearchParams } from "react-router";
 import { Separator } from "./ui/separator";
+import useReviews from "@/hooks/useReviews";
+import ReviewsList from "./ReviewsList";
+
+export type CommonMovie = {
+  title: string;
+  slug: string;
+  user1: {
+    name: string;
+    rate: number | null;
+    rateStars: string | null;
+    liked: boolean;
+  };
+  user2: {
+    name: string;
+    rate: number | null;
+    rateStars: string | null;
+    liked: boolean;
+  };
+};
+
+export type UserReview = {
+  name: string;
+  watchedDate: string;
+  liked: boolean;
+  rate: number | null;
+  rateStars: string | null;
+  review: string;
+};
+
+export type CommonReview = {
+  title: string;
+  slug: string;
+  releaseYear: string;
+  user1: UserReview;
+  user2: UserReview;
+};
 
 interface MoviesCompareProps {
   profile1: Profile;
@@ -55,6 +91,21 @@ function MoviesCompare({ profile1, profile2 }: MoviesCompareProps) {
   } = useWatchlist("user2", isMoviesSuccess);
 
   const isWatchlistLoading = isWatchlistLoading1 || isWatchlistLoading2;
+  const isWatchlistSuccess = !!(watchlist1 && watchlist2);
+
+  const {
+    reviews: reviews1,
+    isPending: isReviewLoading1,
+    // isError: isReviewError1,
+  } = useReviews("user1", isWatchlistSuccess);
+
+  const {
+    reviews: reviews2,
+    isPending: isReviewLoading2,
+    // isError: isReviewError2,
+  } = useReviews("user2", isWatchlistSuccess);
+
+  const isReviewsLoading = isReviewLoading1 || isReviewLoading2;
 
   const commonMovies: CommonMovie[] = [];
   const movies2Map = new Map(movies2?.map((item) => [item.slug, item]));
@@ -110,6 +161,36 @@ function MoviesCompare({ profile1, profile2 }: MoviesCompareProps) {
 
   const likedByUser2NotWatchedByUser1 = liked2?.filter((movie) => {
     return !movies1?.some((item) => item.slug === movie.slug);
+  });
+
+  const commonReviews: CommonReview[] = [];
+  const reviews2Map = new Map(reviews2?.map((item) => [item.slug, item]));
+
+  reviews1?.forEach((item1) => {
+    const item2 = reviews2Map.get(item1.slug);
+    if (item2) {
+      commonReviews.push({
+        title: item1.title,
+        slug: item1.slug,
+        releaseYear: item1.releaseYear,
+        user1: {
+          name: profile1.displayName,
+          watchedDate: item1.watchedDate,
+          liked: item1.liked,
+          rate: item1.rate,
+          rateStars: item1.rateStars,
+          review: item1.review,
+        },
+        user2: {
+          name: profile2.displayName,
+          watchedDate: item2.watchedDate,
+          liked: item2.liked,
+          rate: item2.rate,
+          rateStars: item2.rateStars,
+          review: item2.review,
+        },
+      });
+    }
   });
 
   return (
@@ -191,6 +272,11 @@ function MoviesCompare({ profile1, profile2 }: MoviesCompareProps) {
           <RatedMoviesList moviesList={dissimilarRatedMovies}>
             Dissimilar Rated Movies
           </RatedMoviesList>
+
+          <ReviewsList reviewsList={commonReviews} isLoading={isReviewsLoading}>
+            Common Reviews
+          </ReviewsList>
+
           <ShareLink link={link} />
         </>
       )}

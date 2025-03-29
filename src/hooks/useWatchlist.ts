@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router";
 import { API_URL, Movie, UserKey } from "@/components/pages/ComparePage";
 
-async function getMovies(username: string): Promise<Movie[]> {
+async function getWatchlist(username: string): Promise<Movie[]> {
   const response = await fetch(`${API_URL}/watchlist/${username}`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
@@ -13,7 +13,7 @@ async function getMovies(username: string): Promise<Movie[]> {
 
 function useWatchlist(userKey: UserKey, isEnabled: boolean) {
   const [searchParams] = useSearchParams();
-  const username: string = searchParams.get(userKey) || "";
+  const username = searchParams.get(userKey) || "";
 
   const {
     data: watchlist,
@@ -22,7 +22,7 @@ function useWatchlist(userKey: UserKey, isEnabled: boolean) {
     refetch,
   } = useQuery({
     queryKey: ["watchlist", username],
-    queryFn: () => getMovies(username),
+    queryFn: () => getWatchlist(username),
     enabled: isEnabled,
   });
 

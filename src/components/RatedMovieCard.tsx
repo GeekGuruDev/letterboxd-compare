@@ -1,8 +1,8 @@
-import { CommonMovie } from "./pages/ComparePage";
 import { Card, CardContent } from "./ui/card";
 import UserRating from "./UserRating";
 import { Skeleton } from "./ui/skeleton";
 import useMovie from "@/hooks/useMovie";
+import { CommonMovie } from "./MoviesCompare";
 
 function RatedMovieCard({ ratedMovie }: { ratedMovie: CommonMovie }) {
   const { movie, isPending } = useMovie(ratedMovie.slug);

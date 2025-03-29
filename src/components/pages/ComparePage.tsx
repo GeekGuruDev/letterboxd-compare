@@ -25,23 +25,6 @@ export type Movie = {
   liked: boolean;
 };
 
-export type CommonMovie = {
-  title: string;
-  slug: string;
-  user1: {
-    name: string;
-    rate: number | null;
-    rateStars: string | null;
-    liked: boolean;
-  };
-  user2: {
-    name: string;
-    rate: number | null;
-    rateStars: string | null;
-    liked: boolean;
-  };
-};
-
 function ComparePage() {
   const profileState1 = useProfile("user1");
   const profileState2 = useProfile("user2");
